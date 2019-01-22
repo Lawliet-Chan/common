@@ -52,6 +52,9 @@ func NewLogger(w io.Writer, opt ...*Option) Logger {
 	default:
 		l.Formatter = &logrus.TextFormatter{}
 	}
+	if opt[0].Level == "" {
+		opt[0].Level = "info"
+	}
 	lvl, err := logrus.ParseLevel(opt[0].Level)
 	if err != nil {
 		panic(err)
