@@ -8,13 +8,23 @@ import (
 	"net/http"
 )
 
-func Auth() gin.HandlerFunc {
+type Jwt struct {
+	token []byte
+}
+
+func NewJwt(token string) *Jwt {
+	return &Jwt{
+		token: []byte(token),
+	}
+}
+
+func (j *Jwt) Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		auth := c.Request.Header.Get("Authorization")
 		if c.Request.Method == http.MethodOptions {
 			c.JSON(http.StatusOK, nil)
 		} else {
-			claims, err := parseHmac(auth)
+			claims, err := j.parseHmac(auth)
 			if err != nil || claims == nil {
 				x.UnauthCheck(c, err, "")
 			}
@@ -25,7 +35,7 @@ func Auth() gin.HandlerFunc {
 	}
 }
 
-func parseHmac(auth string) (map[string]interface{}, error) {
+func (j *Jwt) parseHmac(auth string) (map[string]interface{}, error) {
 	token, err := lib.Parse(auth, func(token *lib.Token) (interface{}, error) {
 		if _, ok := token.Method.(*lib.SigningMethodHMAC); !ok {
 			return nil, errors.New("Unexpected signing method")
