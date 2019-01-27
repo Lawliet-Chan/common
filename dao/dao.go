@@ -57,3 +57,7 @@ func (d *Dao) Update(table, value interface{}) {
 func (d *Dao) LimitFind(query, value interface{}, limit int, order interface{}) {
 	d.Limit(limit).Where(query).Order(order, true).Find(value)
 }
+
+func (d *Dao) LimitOffsetFind(query, value, limit, offset, order interface{}) {
+	d.Limit(limit).Offset(offset).Where(query).Order(order, true).Find(value)
+}
