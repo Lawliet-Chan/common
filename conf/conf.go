@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func InitConf(path string, cfg interface{}) interface{} {
+func InitConf(path string, cfg interface{}) {
 	byt, err := ioutil.ReadFile(path)
 	if err != nil {
 		panic(err)
@@ -32,5 +32,4 @@ func InitConf(path string, cfg interface{}) interface{} {
 	if err != nil {
 		panic(err)
 	}
-	return cfg
 }
