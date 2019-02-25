@@ -58,6 +58,10 @@ func (d *Dao) Set(table interface{}, name string, value interface{}) {
 	d.Where(table).Set(name, value)
 }
 
+func (d *Dao) Compute(table interface{}, name, compute string) {
+	d.Where(table).Set(name, name+compute)
+}
+
 func (d *Dao) LimitFind(query, value interface{}, limit int, order interface{}) {
 	d.Limit(limit).Where(query).Order(order, true).Find(value)
 }
