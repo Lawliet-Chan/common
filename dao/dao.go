@@ -54,6 +54,10 @@ func (d *Dao) Update(table, value interface{}) {
 	d.Model(table).Update(value)
 }
 
+func (d *Dao) Set(table interface{}, name string, value interface{}) {
+	d.Where(table).Set(name, value)
+}
+
 func (d *Dao) LimitFind(query, value interface{}, limit int, order interface{}) {
 	d.Limit(limit).Where(query).Order(order, true).Find(value)
 }
