@@ -16,7 +16,7 @@ type QiniuFS struct {
 	mac    *qbox.Mac
 }
 
-func NewQiniuFS(accessKey, secretKey, domain, bucket string, zone *storage.Zone) FileService {
+func NewQiniuFS(accessKey, secretKey, domain, bucket string, zone *storage.Zone) FS {
 	return &QiniuFS{
 		domain: domain,
 		bucket: bucket,

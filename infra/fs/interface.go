@@ -2,7 +2,7 @@ package fs
 
 import "io"
 
-type FileService interface {
+type FS interface {
 	UploadFilePath(fpath, key string) (string, error)
 	UploadFileReader(reader io.Reader, key string, fsize int64) (string, error)
 	GetDownloadUrl(key string) string

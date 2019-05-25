@@ -15,6 +15,7 @@ require (
 	github.com/qiniu/x v7.0.8+incompatible // indirect
 	github.com/sirupsen/logrus v1.4.2
 	google.golang.org/appengine v1.6.0 // indirect
+	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/yaml.v2 v2.2.2
 	qiniupkg.com/x v7.0.8+incompatible // indirect
 )
