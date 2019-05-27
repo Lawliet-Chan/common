@@ -10,18 +10,20 @@ import (
 )
 
 type QiniuFS struct {
-	domain string
-	bucket string
-	cfg    *storage.Config
-	mac    *qbox.Mac
+	isPrivate bool
+	domain    string
+	bucket    string
+	cfg       *storage.Config
+	mac       *qbox.Mac
 }
 
-func NewQiniuFS(accessKey, secretKey, domain, bucket string, zone *storage.Zone) FS {
+func NewQiniuFS(accessKey, secretKey, domain, bucket string, zone *storage.Zone, isPrivate bool) FS {
 	return &QiniuFS{
-		domain: domain,
-		bucket: bucket,
-		mac:    qbox.NewMac(accessKey, secretKey),
-		cfg:    &storage.Config{Zone: zone},
+		isPrivate: isPrivate,
+		domain:    domain,
+		bucket:    bucket,
+		mac:       qbox.NewMac(accessKey, secretKey),
+		cfg:       &storage.Config{Zone: zone},
 	}
 }
 
@@ -47,7 +49,10 @@ func (q *QiniuFS) DeleteFile(key string) error {
 }
 
 func (q *QiniuFS) GetDownloadUrl(key string) string {
-	return storage.MakePrivateURL(q.mac, q.domain, key, time.Now().Add(time.Minute*2).Unix())
+	if q.isPrivate {
+		return storage.MakePrivateURL(q.mac, q.domain, key, time.Now().Add(time.Minute*2).Unix())
+	}
+	return storage.MakePublicURL(q.domain, key)
 }
 
 func (q *QiniuFS) DownloadFile(fid string) (string, []byte, error) {
