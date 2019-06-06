@@ -55,6 +55,10 @@ func (q *QiniuFS) GetDownloadUrl(key string) string {
 	return storage.MakePublicURL(q.domain, key)
 }
 
+func (q *QiniuFS) GetToken(typ TokenType, fid string) (string, error) {
+	panic("qiniuFS does not implement yet !")
+}
+
 func (q *QiniuFS) DownloadFile(fid string) (string, []byte, error) {
 	panic("qiniuFS does not implement yet!")
 }
